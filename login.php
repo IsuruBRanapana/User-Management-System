@@ -1,50 +1,56 @@
-<?php 
-	require_once('inc/connection.php');
-
-	//check form submission
+<?php require_once('inc/connection.php') ?>
+<?php  
+	//check for submition
 	if (isset($_POST['login'])) {
 
-		//check if the username and password has been entered
 		$errors=array();
-		if (!isset($_POST['username']) || strlen(trim($_POST['username']))<1) {
-			//invalid username
+		//check user name and password
+		if (!isset($_POST['email'])||strlen(trim($_POST['email']))<1) {
 			$errors[]='Username is missing / invalid';
 		}
-
 		if (!isset($_POST['password'])||strlen(trim($_POST['password']))<1) {
-			//invalid password
 			$errors[]='Password is missing / invalid';
 		}
 
 		//check if there are any errors in the form
 		if (empty($errors)) {
-
-			//save username and password into variabless
-			$username=mysqli_real_escape_string($connection,$_POST['username']);
+			//assign variables
+			$email=mysqli_real_escape_string($connection,$_POST['email']);
 			$passwrd=mysqli_real_escape_string($connection,$_POST['password']);
-			$password=sha1($passwrd);
+			$password=md5($passwrd);  
 
-			//prepare a database query
-			$query="SELECT * FROM user 
-					WHERE email='{$email}' 
-					AND password='{$password}' LIMIT 1";
-			//check if the user is valid
-			//redirect to users
-			//if not, display error
+			//create query
+			$query="SELECT * FROM user WHERE email='{$email}' AND password = '{$password}' LIMIT 1";
+
+			$result_set=mysqli_query($connection,$query);
+			if ($result_set) {
+				if (mysqli_num_rows($result_set)==1) {
+					//valid user
+					header('Location: users.php');
+				}else{
+					$errors[]='Invalid Username / Password';
+				}
+			}else{
+				$errors[]='Database query failed';
+			}
 		}
-		
 	}
-	
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html  lang="en">
 <head>
 	<meta charset="utf-8">
 	<title></title>
 </head>
 <body>
 	<form action="login.php" method="post">
-		Username : <input type="text" name="username" placeholder="E-mail"><br>
+		<?php  
+			if (isset($errors)&& !empty($errors)) {
+				echo "Invalid user";
+				print_r($errors);
+			}
+		?>
+		Username : <input type="text" name="email" placeholder="E-mail"><br>
 		Password : <input type="password" name="password" placeholder="Password"><br>
 		<input type="submit" name="login" value="Log In"><br>
 	</form>

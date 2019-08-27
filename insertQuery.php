@@ -8,7 +8,7 @@ if (isset($_POST['login'])) {
 	$last_name=$_POST['last_name'];
 	$email=$_POST['email'];
 	$passwrd=$_POST['password'];
-	$password=sha1('$passwrd');
+	$password=md5($passwrd);
 	$query="INSERT INTO user(first_name,last_name,email,password) VALUES ('$first_name','$last_name','$email','$password')";
 	$result=mysqli_query($connection,$query);
 	if ($result) {
