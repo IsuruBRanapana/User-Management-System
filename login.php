@@ -41,8 +41,84 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
+	<style>
+		.loginbox{
+	width: 320px;
+	height: 420px;
+	background: rgba(0,0,0,0.8);
+	color: #fff;
+	top: 50%;
+	left:50%;
+	position: absolute;
+	transform: translate(-50%,-50%);
+	box-sizing: border-box;
+	padding: 70px 30px;
+}
+h1{
+	margin:0;
+	padding: 0 0 20px;
+	text-align: center; 
+	font-size: 22px;
+}
+.loginbox p{
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+}
+.loginbox input{
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.loginbox input[type="text"],input[type="password"]{
+	border:none;
+	border-bottom:1px solid #fff;
+	background:  transparent;
+	outline: none;
+	height: 40px;
+	color: #fff;
+	font-size: 16px;
+
+}
+.loginbox input[type="submit"]
+{
+	border:none;
+	outline: none;
+	background: #3896ee;
+	color: #fff;
+	font-size: 18px;
+	border-radius: 20px;
+
+}
+.loginbox input[type="submit"]:hover
+{
+	cursor: pointer;
+	background-color:  #a6cef5
+;
+	color: #000;
+
+}
+.loginbox a{
+	text-decoration: none;
+	font-size: 12px;
+	line-height: 20px;
+	color: darkgrey;
+}
+.loginbox a:hover{
+	color: #2920da
+;
+}
+
+	</style>
 </head>
 <body>
+	<div class="loginbox">
+		
+<i class="material-icons" style="color:blue;width: 100px;height: 100px;border-radius: 50%;position: absolute;top: -50px;
+	left: calc(50% - 50px);
+"></i>
+		<h1>Login Here</h1>
+	
 	<form action="login.php" method="post">
 		<?php  
 			if (isset($errors)&& !empty($errors)) {
@@ -53,7 +129,10 @@
 		Username : <input type="text" name="email" placeholder="E-mail"><br>
 		Password : <input type="password" name="password" placeholder="Password"><br>
 		<input type="submit" name="login" value="Log In"><br>
-	</form>
+		<a href="#">Lost Your Password?</a><br>
+		<a href="#">Don't have an account?</a>
+		
+		</form></div>
 </body>
 </html>
 <?php mysqli_close($connection); ?>
